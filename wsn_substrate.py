@@ -199,6 +199,7 @@ class WSN():
         self.__adj_list = adj_list
 
     def get_adjacency_list(self):
+        # grid topology used for testing
         adj_list = {0: [1,2],1: [0, 2, 9],
          2: [0, 1, 3, 10],
          3: [2, 4, 11],
@@ -269,7 +270,7 @@ class WSN():
         self.__positions = positions
 
     def get_nodes_position(self):
-
+        # grid topology used for testing
         position = {1:(0,0),
         2:(0,0.5),
         3:(0,1),
@@ -350,40 +351,3 @@ class WSN():
     def get_initial_link_weight(self):
         return self.__inital_weight
 
-
-
-'''
-if __name__ == '__main__':
-
-    plr = 1
-    adj_list = {1: [(2, plr), (5, plr)],
-                2: [(1, plr), (3, plr), (5, plr)],
-                3: [(2, plr), (4, plr)],
-                4: [(3, plr), (5, plr)],
-                5: [(4, plr), (2, plr), (1, plr)]}
-
-
-    wsn = WSN(2,3,adj_list)
-    print()
-    network = wsn.get_wsn_substrate()
-    print(network.edge[1][2]['load'])
-    print(network[1][5]['weight'])
-    print(network.node[1])
-    print(network.node[2]['load'])
-    print(network[5])
-
-
-    print("wsn.get_wsn_substrate().nodes(data=True):",wsn.get_wsn_substrate().nodes(data=True))
-    print("wsn.get_wsn_substrate().edges(data=True):",wsn.get_wsn_substrate().edges(data=True))
-
-
-
-    for n,d in wsn.get_wsn_substrate().nodes(data=True):
-        print(n,d)
-
-    print("===")
-    for u,v,d in wsn.get_wsn_substrate().edges(data=True):
-        print(u,v,d['weight'])
-
-    print("TEST")
-'''
