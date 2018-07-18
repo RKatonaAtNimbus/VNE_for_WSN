@@ -81,12 +81,10 @@ second_find_flag = False
 first_find = 0
 solution_progress = []
 eval_counter = 0
-
 proc = 0
 
 # node mapping specific parameters
-
+# not used in this version
 source_list = {}
 src_loads = []
-
 subset_sums = []
