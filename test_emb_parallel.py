@@ -9,8 +9,6 @@ import itertools
 from wsn_substrate import WSN
 import networkx as nx
 from link_weight import LinkCost
-import vne
-import vne
 import time
 import visualize as vis
 from itertools import islice
@@ -972,8 +970,8 @@ def find_best_source(vnr,indx):
 def generate_independent_perm_blocks(vnrs_list, result_q, min_acceptance, min_feasible_q, min_accept, solution_progress_q):
     no_of_processes = multiprocessing.cpu_count()
     #print("vne.get_vnrs(vnrs_list)", vne.get_vnrs(vnrs_list))
-    perms = tuple(itertools.permutations(vne.get_vnrs(vnrs_list), r=None))
-    vnrs_size = len(vne.get_vnrs(vnrs_list))
+    perms = tuple(itertools.permutations(vnrs_list, r=None))
+    vnrs_size = len(vnrs_list)
     start_indx = 0
     if vnrs_size > 3:
         idx_increm = math.factorial(vnrs_size) / no_of_processes
