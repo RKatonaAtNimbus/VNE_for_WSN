@@ -9,7 +9,7 @@ which are made available.
 There are input vectors for networks of 50, 100 and 150 nodes. Each network size
 was tested with batches of 1 to 8 VNRs. For each (nwk size, number of vnrs) pair,
 1000 tests were done. 
-(NOTE: Due to space restrictions, only 100 test cases were included in the input_vectors.xz archive file)
+(NOTE: Due to space restrictions, only 100 test cases were included in the pickle files in the input_vectors.xz archive.)
 
 In each test the following were randomized:
 * network topology
@@ -27,6 +27,30 @@ elements, each a dictionary with the following keys:
 * iteration,
 * numvn,
 * vnlist.
+
+## The heuristic based algorithm
+
+The VNE problem is solved using greedy heuristics combined with dynamic programming techniques using parallel processing.
+
+### Constraints
+* QoI: -VNRs specify their prefered sampling location using an interest point as well as the tolerated measurement error. The two         parameters are used to define a set of candidate source nodes for each VNR.
+* Link capacity
+* End-to-end path reliability
+
+### Objectives
+Two objectives are used:
+1. Maximize acceptance ratio
+2. Minimize cost.
+
+The two objectives are used together. First the acceptance ratio objective is used to determine the highest acceptance ratio for an IV. The solution quality is  improved in two possible cases: 1. if the acceptance ratio of the current solution is higher than the best so far; 2. if the acceptance ratio is the same as the best so far but the cost is lower. The ultimate best sulution is the one that has the highest possible acceptancce ratio and the lowest cost when compared to other solutions with equal acceptance ratio.
+
+### Usage
+The script "test\_emb\_parallel.py" runs the algorithm to perform the embedding for each iteration/test case based on the parameters provided in the input vector. For each iteration, the link mapping is performed for all possible permutations/sequences of a batch of requests to find the best solution. The sulution of each embedding sequence is recorded in the results file for further analysis. 
+The script uses the 'convert\_to\_heuristic' method of the 'vnr\_generator.py' module to convert the input vectors into a suitable format. The NetworkX python library is used to manipulate the graphobject that represents the WSN substrate.
+
+
+### Output
+The script generates a solution vector corresponding to the input vector as a pickle file. The file consists of a result dictionary for each iteration.
 
 
 ## Mixed Integer Linear Programming representation
