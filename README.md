@@ -42,7 +42,7 @@ Two objectives are used:
 1. Maximize acceptance ratio
 2. Minimize cost.
 
-The two objectives are used together. First the acceptance ratio objective is used to determine the highest acceptance ratio for an IV. The solution quality is  improved in two possible cases: 1. if the acceptance ratio of the current solution is higher than the best so far; 2. if the acceptance ratio is the same as the best so far but the cost is lower. The ultimate best sulution is the one that has the highest possible acceptancce ratio and the lowest cost when compared to other solutions with equal acceptance ratio.
+The two objectives are used together. The solution quality is improved in two possible cases: 1. if the acceptance ratio of the current solution is higher than the best so far; 2. if the acceptance ratio is the same as the best so far but the cost is lower. The ultimate best sulution is the one that has the highest possible acceptancce ratio and the lowest cost when compared to other solutions with equal acceptance ratio.
 
 ### Usage
 The script "test\_emb\_parallel.py" runs the algorithm to perform the embedding for each iteration/test case based on the parameters provided in the input vector. For each iteration, the link mapping is performed for all possible permutations/sequences of a batch of requests to find the best solution. The sulution of each embedding sequence is recorded in the results file for further analysis. 
