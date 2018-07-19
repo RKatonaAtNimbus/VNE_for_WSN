@@ -1,18 +1,16 @@
+"""
+The python class that represents the WSN substrate.
+It uses the adjacency_matrix from the input vector to create a networkx DiGraph object.
+Node and edge attributes are initialized using the adjacency_matrix and substrate_coords from the input vectors.
+
+The interference neighborhood is calculated for each transmission/link and stored in the dictonary 'self.__conflicting_links' 
+
+"""
 import networkx as nx
 import copy
 from link_weight import LinkCost
 
 class WSN():
-
-    __WSN_Substrate = nx.DiGraph()
-    __link_weights = dict()
-    __link_quality = dict()
-    __adj_list = dict()
-    __two_hops_list = dict()
-    __conflicting_links = dict()
-    __positions = dict()
-    __inital_weight = 0
-
 
     def __init__(self,n,m, init_adj_list):
         self.__WSN_Substrate = nx.DiGraph()
@@ -27,7 +25,7 @@ class WSN():
 
         #self.convert_to_adj_list(n,m)
 
-        ##replaces the old substrate init and parses the new adjacency list format with the plr
+        # replaces the old substrate init and parses the new adjacency list format with the plr
         self.__adj_list  = self.parse_init_adj_list(init_adj_list)
 
         #self.init_wsn_substrate(self.get_adjacency_list())
@@ -154,16 +152,6 @@ class WSN():
                 #print(neighbor,"e_set",sorted(e_set))
             self.__conflicting_links.update({node:neighbor_conflict})
             #print("__conflicting_links",self.__conflicting_links)
-
-
-#    def init_wsn_substrate(self, adj_list):
-#        for n in adj_list:
-#            self.__WSN_Substrate.add_node(n, {'rank':1, 'load':1})
-#            items = adj_list.get(n)
-#            for i in items:
-#                self.__WSN_Substrate.add_edge(n,i, {'plr':1, 'load':1, 'weight':1})
-#                self.__link_weights[(n,i)] = 1
-
 
     def parse_init_adj_list(self, init_adj_list):
         # init_adj_list is a tuple consisting of a list of coordinates for each nodes as well as the adjacencies
