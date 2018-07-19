@@ -177,7 +177,7 @@ def get_shortest_path(graph, frm, to, load, required_plr):
     # eg. <HOME_OF_PYTHON>/site-packages/networkx/algorithms/shortest_paths/weighted.py
      
     if config.sp_alg_str == "Dijkstra":
-        length, path = nx.bidirectional_dijkstra(graph, conflicting_links_dict, load, required_plr, source=frm, target=to,  weight='weight')
+        length, path = nx.bidirectional_dijkstra(graph, source=frm, target=to,  weight='weight')
     else:
         length, path = nx.astar_path_length(graph, source=frm, target=to, heuristic=None, weight='weight')
     config.verify_operations += 1
