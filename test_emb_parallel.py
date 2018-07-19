@@ -1,5 +1,13 @@
-## Main File
-## Implements the Virtual Network  Embedding Algorithm
+"""
+The main module that implements the VNE algorithm using parallel processing.
+It takes in a pickle file as input. The arguments of each input vector that represents a test case are described in the README.
+
+For each iteration/test case, first it parses the input vector and creates a WSN object which represents the substrate and 
+holds its attributes in a networkx DiGraph. Then it perfoms the node mapping for a batch of requests in the main process serially.
+Next the link mapping is performed in parallel using 'p' number of processes where 'p' is the number of available processors.
+The solutions of the embedding for all sequences/permutations of a test case are recorded. The results are stored in a pickle file
+and the captured metrics are explained in the README.
+"""
 
 import sys
 from scipy import spatial
@@ -1342,7 +1350,7 @@ if __name__ == '__main__':
                             converted_vnr = vnrs.convert_to_heuristic()
                             vnrs_list.append(converted_vnr)
                     else:
-# Include an explanation of parsing input files in the Readme 
+			# Explanation of parsing the input files is in the Readme 
                         for vnrs in test_case['vnlist']:
                             converted_vnr = vnrs.convert_to_heuristic()
                             vnrs_list.append(converted_vnr)
