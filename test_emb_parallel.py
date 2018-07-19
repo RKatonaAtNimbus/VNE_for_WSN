@@ -1386,7 +1386,7 @@ if __name__ == '__main__':
                     confl_wghts = []
                     for w in sorted_conflict_weights:
                         neigbrs = len(adjacencies[w[1]]) + len(adjacencies[w[2]])
-                        print w[1],"->",w[2],"INEX",w[0],"#neighbors",neigbrs,"avg_pth_lnght", avg_pth_lngths[w[1]], avg_pth_lngths[w[2]], config.wsn[w[1]][w[2]]["weight"], "ratios", neigbrs*w[0], float(neigbrs)/float(w[0]), float(w[0])/float(neigbrs)
+                        #print w[1],"->",w[2],"INEX",w[0],"#neighbors",neigbrs,"avg_pth_lnght", avg_pth_lngths[w[1]], avg_pth_lngths[w[2]], config.wsn[w[1]][w[2]]["weight"], "ratios", neigbrs*w[0], float(neigbrs)/float(w[0]), float(w[0])/float(neigbrs)
                         confl_wghts.append((float(w[0])/float(neigbrs),)+w)
                     print ""
                     print "confl_wghts",confl_wghts
