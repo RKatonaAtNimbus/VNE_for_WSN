@@ -133,17 +133,17 @@ def check_link_constraints(shortest_path,e_list, e_list2, load, required_plr, ws
         worst_plr = 0.0
         #print(shortest_path)
         for u, v in shortest_path:
-            if wsn.edges[u,v]['plr'] >= worst_plr:
+            if wsn.edge[u][v]['plr'] >= worst_plr:
                 #print(u,v,wsn.edge[u][v]['plr'],worst_plr)
-                worst_plr = wsn.edges[u,v]['plr']
+                worst_plr = wsn.edge[u][v]['plr']
                 worst_link = (u, v)
         print ("worst_link",worst_link)
         return worst_link,VN_links
     for u,v in e_list2:
         config.verify_operations += 1
         required_load = load * e_list.count((u,v))
-        if wsn.edges[u,v]['load'] + required_load > 100:
-            print("Link",u, v,"requires",wsn.edges[u,v]['load']," + ",required_load, "but have not got enough")
+        if wsn.edge[u][v]['load'] + required_load > 100:
+            print("Link",u, v,"requires",wsn.edge[u][v]['load']," + ",required_load, "but have not got enough")
             return (u,v),VN_links
         else:
             VN_links.add_edge(u,v, **{'load':required_load})
