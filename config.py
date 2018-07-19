@@ -1,3 +1,7 @@
+"""
+Module that holds shared variables used y the main module during the embedding.
+"""
+
 import sys;
 sys.path.append('/home/roland/ownCloud/Dropbox/_PhD/Virtual_Network_Embedding/Development/PycharmProjects/VNE_Directed/');
 
