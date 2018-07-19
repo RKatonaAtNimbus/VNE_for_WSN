@@ -8,7 +8,8 @@ which are made available.
 
 There are input vectors for networks of 50, 100 and 150 nodes. Each network size
 was tested with batches of 1 to 8 VNRs. For each (nwk size, number of vnrs) pair,
-100 tests were done.
+1000 tests were done. 
+(NOTE: Due to space restrictions, only 100 test cases were included in the input_vectors.xz archive file)
 
 In each test the following were randomized:
 * network topology
