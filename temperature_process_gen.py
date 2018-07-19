@@ -18,8 +18,7 @@ of sensor, interest point. This matrix will be used to determine the error of
 predicting the temperature value at an interest point from a sensor.
 """
 
-from cooja_control.net_link_quality_analyser import get_max_range
-d_max = get_max_range()*2
+d_max = 500*2
 
 from random import random, seed
 from math import sqrt, log

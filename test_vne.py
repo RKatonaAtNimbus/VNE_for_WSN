@@ -4,7 +4,6 @@ Script for testing the VNE solvers, LPP and heuristic.
 Generate a network.
 Generate virtual network requests.
 """
-from nwk_generator import NwkGenerator, output_for_lp
 from vnr_generator import output_vn_links_for_lp
 
 from pyomo.environ import *
@@ -19,8 +18,7 @@ from time import time
 
 from temperature_process_gen import TemperatureProcess
 import networkx as nx
-import cooja_control.net_link_quality_analyser as LQA   # For max radio range
-from cooja_control.network_builder import NodeStore, Node
+from network_builder import NodeStore, Node
 from math import sqrt
 from copy import deepcopy
 from os import remove as remfile    # To remove files
@@ -28,6 +26,8 @@ from os import remove as remfile    # To remove files
 import logging
 logging.basicConfig()
 logger = logging.getLogger(__name__)
+
+max_comms_range = 500
 
 ###############################################################################
 #
@@ -40,6 +40,43 @@ logger = logging.getLogger(__name__)
 # all the constraints (no more slack) and minimizes the amount of resources
 # allocated.
 ###############################################################################
+
+def output_for_lp(_file, nodes, substrate_edges):
+    """Output a network to a file object, in the format required by
+    PyOMO.
+    Returns: -1 if cannot write to file, 0 otherwise.
+
+    Parameters:
+    _file       -- File object to write data to.
+    nodes       -- List of node coordinates
+    substrate_edges -- List of edges, defined as (src, dest, prr, capacity, latency)
+    """
+    if _file is None: return -1
+    try:
+        _file.write("\n###############################################\n")
+        _file.write("\n# Substrate model\n")
+        # Substrate nodes
+        _file.write("set V_s := %s;\n"
+                     % ' '.join(map(str, range(0, len(nodes)))))
+        # Substrate edges
+        _file.write("set E_s := %s;\n"
+                          % ' '.join([str((s,d)) for (s,d,p,c,l) in substrate_edges]))
+        # Link capacity, set at 100
+        _file.write("param cap_l := %s;\n"
+              % '\n'.join(["%d %d %d" % (s,d,c) for (s,d,p,c,l) in substrate_edges]))
+        # Link latency, set at 1ms
+        _file.write("param lat := %s;\n"
+                  % '\n'.join(["%d %d %d" % (s,d,l) for (s,d,p,c,l) in substrate_edges]))
+        # Link reliability
+        _file.write("param rel := %s;\n"
+                % '\n'.join(["%d %d %0.4f"% (s,d,p) for (s,d,p,c,l) in substrate_edges]))
+
+        # Close this
+        _file.write("##################################################")
+    except Exception as e:
+        print e
+        return -1
+    return 0
 
 def generate_lp_input(substrate, adj_matrix, interests, temp_proc, vnrs, lp_path):
     """
@@ -103,7 +140,7 @@ def generate_lp_input(substrate, adj_matrix, interests, temp_proc, vnrs, lp_path
     y_min, y_max = min(y_coords), max(y_coords)
     #area_diag = sqrt((x_max-x_min)**2 + (y_max-y_min)**2)
     area_diag = tp.area_width * sqrt(2)
-    node_store = NodeStore(int(area_diag), LQA.get_max_range())
+    node_store = NodeStore(int(area_diag), max_comms_range)
     for idx,(x,y) in enumerate(substrate):
         node_store.add(Node(x, y, idx))
     meta_node_id = len(substrate)
@@ -941,19 +978,3 @@ def solve_lp(input_vector):
                 }
     return solution
 
-
-
-def test():
-    # NwkGenerator is initialised with width and number of nodes.
-    # The maximum hop distance is 500, so width should be greater than that,
-    # otherwise all the nodes will be connected.
-    nwk = NwkGenerator(2000, 20)
-    vnr_list = [VirtualNetGenerator(20, 1) for i in xrange(5)]
-    print "VN requests:", vnr_list
-
-    # Generate a CSC file to view the network in Cooja
-    nwk.output_csc('cooja.csc')
-
-    solve_lp(nwk, vnr_list)
-
-    print "Done"
