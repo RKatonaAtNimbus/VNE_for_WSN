@@ -1,4 +1,6 @@
-'''Calculate the weight if a link using a composite metric'''
+'''
+Calculate the weight of a link that is used for the shortest path calculations as a composite metric.
+'''
 
 class LinkCost():
 
